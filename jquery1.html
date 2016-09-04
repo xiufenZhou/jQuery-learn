@@ -7,6 +7,7 @@
     <script>
         $(document).ready(function(){
             $('.level1>a').click(function(){
+
                 if($(this).hasClass('current')){
                     $(this).removeClass('current')
                             .next().hide();
@@ -15,9 +16,8 @@
                             .next().show()
                             .parent().siblings().children('a').removeClass('current')
                             .next().hide();
-                    return false;
                 }
-
+                return false;
             });
         })
     </script>
