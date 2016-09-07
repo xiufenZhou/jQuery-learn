@@ -4,61 +4,266 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="jquery-3.1.0.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.level1>a').click(function(){
 
-                if($(this).hasClass('current')){
-                    $(this).removeClass('current')
-                            .next().hide();
-                }else{
-                    $(this).addClass('current')
-                            .next().show()
-                            .parent().siblings().children('a').removeClass('current')
-                            .next().hide();
-                }
-                return false;
-            });
-        })
-    </script>
     <style>
-        .level2{
-            display: none;
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+        ul li{
+            list-style: none;
+        }
+        img{
+            width: 90px;
+            height: 70px;
+        }
+        .v_show{
+            width: 440px;
+            height: 160px;
+            border: 1px solid #666;
+            margin: 20px;
+        }
+        .v_caption{
+            width: 440px;
+            height: 24px;
+            background-color: #ccc;
+        }
+        .v_caption span{
+            cursor: pointer;
+        }
+        h2.cartoon{
+            float: left;
+            padding:0 10px;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        .highlight_tip{
+            float: left;
+        }
+        .highlight_tip span{
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            text-align: center;
+            line-height: 12px;
+            font-size: 6px;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .highlight_tip .current{
+            background-color: #666;
+            color:#fff;
+        }
+        .change_btn{
+            float: left;
+            font-size: 8px;
+            line-height: 24px;
+            margin-left: 10px;
+        }
+        .v_caption em{
+            float: right;
+            padding-right: 10px;
+        }
+        .v_caption em a{
+            font-size: 8px;
+            color: #666;
+        }
+        
+        .v_content{
+            width: 440px;
+            height: 105px;
+            padding: 15px 0px;
+            overflow: hidden;
+            position: relative;
+        }
+        .v_content ul{
+            position: absolute;
+            width: 1760px;
+            height: 105px;
+        }
+        .v_content ul li{
+            width: 90px;
+            height: 105px;
+            padding: 0 10px;
+            float: left;
+        }
+        .v_content ul li h4{
+            font-size: 8px;
+            line-height: 18px;
+        }
+        .v_content ul li h4 a{
+            color: #666;
+        }
+        .v_content ul li span{
+            font-size: 8px;
+            color: #666;
         }
 
     </style>
+    <script>
+        $(document).ready(function () {
+            var page = 1;
+            var i = 4;
+            $('span.next').click(function(){
+                var $parent = $(this).parents('div.v_show');
+                var $v_content = $parent.find('div.v_content');
+                var $v_show = $parent.find('ul.v_content_list');
+
+                var v_width = $v_content.width();
+                var len = $v_show.find('li').length;
+                var page_count = Math.ceil(len/i);
+                if(!$v_show.is(':animated')){
+                    if(page == page_count){
+                        $v_show.animate({left:'0px'},'normal');
+                        page = 1;
+                    }else{
+                        $v_show.animate({left:'-='+v_width},'normal');
+                        page++;
+                    }
+                    $parent.find('div.highlight_tip span').eq(page-1).addClass('current')
+                            .siblings().removeClass('current');
+                }
+
+            })
+
+            $('span.prev').click(function(){
+                var $parent = $(this).parents('div.v_show');
+                var $v_content = $parent.find('div.v_content');
+                var $v_show = $parent.find('ul.v_content_list');
+
+                var v_width = $v_content.width();
+                var len = $v_show.find('li').length;
+                var page_count = Math.ceil(len/i);
+                if(!$v_show.is(':animated')){
+                    if(page == 1){
+                        $v_show.animate({left:'-'+v_width*(page_count-1)+'px'},'normal');
+                        page = 4;
+                    }else{
+                        $v_show.animate({left:'+='+v_width},'normal');
+                        page--;
+                    }
+                    $parent.find('div.highlight_tip span').eq(page-1).addClass('current')
+                            .siblings().removeClass('current');
+                }
+
+            })
+            $('div.highlight_tip span').click(function(){
+                var n = $('div.highlight_tip span').index($(this));
+                //console.log(n);
+                $(this).addClass('current').siblings().removeClass('current');
+                //console.log(n*$('div.v_content').width());
+                $('ul.v_content_list').animate({left:'-'+n*$('div.v_content').width()+'px'},'normal');
+            })
+
+
+        });
+
+    </script>
 </head>
 <body>
-<div class="box">
-    <ul class="menu">
-        <li class="level1">
-            <a href="#">衬衫</a>
-            <ul class="level2">
-                <li><a href="#" class="get">短袖衬衫</a></li>
-                <li><a href="#">长袖衬衫</a></li>
-                <li><a href="#">短袖T恤</a></li>
-                <li><a href="#">长袖T恤</a></li>
+<div class="v_show">
+    <div class="v_caption">
+        <h2 class="cartoon" title="卡通动漫">卡通动漫</h2>
+
+        <div class="highlight_tip">
+            <span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+        </div>
+        <div class="change_btn">
+            <span class="prev">上一页</span>
+            <span class="next">下一页</span>
+        </div>
+        <em><a href="#">更多>></a></em>
+    </div>
+    <div class="v_content">
+            <ul class="v_content_list">
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="海贼王"/></a>
+                    <h4><a href="#">海贼王</a></h4>
+                    <span>播放：<em>28，276</em></span>
+                </li>
+                <li>
+                    <a href="#"><img src="img/1.jpg" alt="龙珠"/></a>
+                    <h4><a href="#">龙珠</a></h4>
+                    <span><em>57，865</em></span>
+                </li>
             </ul>
-        </li>
-        <li class="level1">
-            <a href="">卫衣</a>
-            <ul class="level2">
-                <li><a href="#">开襟卫衣</a></li>
-                <li><a href="#">套头卫衣</a></li>
-                <li><a href="#">运动卫衣</a></li>
-                <li><a href="#">童装卫衣</a></li>
-            </ul>
-        </li>
-        <li class="level1">
-            <a href="#">裤子</a>
-            <ul class="level2">
-                <li><a href="#">短裤</a></li>
-                <li><a href="#">休闲裤</a></li>
-                <li><a href="#">牛仔裤</a></li>
-                <li><a href="#">免烫卡其裤</a></li>
-            </ul>
-        </li>
-    </ul>
+    </div>
 </div>
 </body>
 </html>

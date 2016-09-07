@@ -1,0 +1,19 @@
+{
+  "name": "learnjquery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jquery-3.1.0.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiufenZhou/jQuery-learn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiufenZhou/jQuery-learn/issues"
+  },
+  "homepage": "https://github.com/xiufenZhou/jQuery-learn#readme"
+}
