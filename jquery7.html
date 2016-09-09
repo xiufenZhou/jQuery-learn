@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>表格展开关闭</title>
+    <script src="jquery-3.1.0.js"></script>
+    <script>
+        $(function(){
+            $('.parent').css('backgroundColor','#ccc').click(function(){
+                $(this).toggleClass('selected')
+                        .siblings('.child_'+this.id).toggle()
+            }).click();//加的这个click()是默认需要收缩起来进入页面时就能实现
+        })
+    </script>
+    <style>
+        table{
+            border: 1px solid #333;
+            border-spacing: 0;
+            line-height: 18px;
+        }
+        thead{
+            font-weight: bold;
+
+        }
+        thead td{
+            border-bottom: 1px solid #333;
+        }
+        td{
+            padding:0 20px;
+        }
+        .selected{
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>姓名</td>
+        <td>性别</td>
+        <td>暂住地</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="parent" id="row_01">
+        <td colspan="3">前台设计组</td>
+    </tr>
+    <tr class="child_row_01">
+        <td>张三</td>
+        <td>男</td>
+        <td>河南郑州</td>
+    </tr>
+    <tr class="child_row_01">
+        <td>李四</td>
+        <td>女</td>
+        <td>河南商丘</td>
+    </tr>
+    <tr class="parent" id="row_02">
+        <td colspan="3">前台开发组</td>
+    </tr>
+    <tr class="child_row_02">
+        <td>王五</td>
+        <td>男</td>
+        <td>河南南阳</td>
+    </tr>
+    <tr class="child_row_02">
+        <td>赵六</td>
+        <td>男</td>
+        <td>河南开封</td>
+    </tr>
+    <tr class="parent" id="row_03">
+        <td colspan="3">后台开发组</td>
+    </tr>
+    <tr class="child_row_03">
+        <td>Rain</td>
+        <td>男</td>
+        <td>河南洛阳</td>
+    </tr>
+    <tr class="child_row_03">
+        <td>MAXMAN</td>
+        <td>女</td>
+        <td>河南三门峡</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

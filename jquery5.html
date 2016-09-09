@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>表单验证</title>
+    <script src="jquery-3.1.0.js"></script>
+    <script>
+        $(function(){
+            $('form :input.required').each(function(){
+                $(this).parent().append('<strong class="must">*</strong>');
+            });
+
+            $('form :input').blur(function(){
+                //验证用户名
+                if($(this).is('#username')){
+                    $(this).siblings('span').remove();
+                    if(this.value==''||this.value.length < 6){
+                        var errorMsg = '请输入至少6位的用户名';
+                        $(this).parent().append('<span class="error">'+errorMsg+'</span>');
+                    }else{
+                        var okMsg = '输入正确';
+                        $(this).parent().append('<span class="ok">'+okMsg+'</span>');
+                    }
+                }
+                //验证邮箱
+                if($(this).is('#email')){
+                    $(this).siblings('span').remove();
+                    if(this.value == ''|| (this.value != ''&&! /.+@.+\.[a-zA-Z]{2,4}$/.test(this.value))){
+                        var errorMsg = '请输入正确的email地址';
+                        $(this).parent().append('<span class="error">'+errorMsg+'</span>');
+                    }else{
+                        var okMsg = '输入正确';
+                        $(this).parent().append('<span class="ok">'+okMsg+'</span>');
+                    }
+                }
+            }).keyup(function(){
+                $(this).triggerHandler('blur');
+            }).focus(function(){
+                $(this).triggerHandler('blur');
+            });//keyup() focus()  都给事件绑定了blur,可以即时的提醒
+
+            $('#send').click(function(){
+                $('form :input.required').trigger('blur');
+                var $n = $('form .error').length;
+                if($n){
+                    return false;
+                }
+                alert('注册成功，密码已发到你的邮箱，请查收。');
+            })
+        })
+    </script>
+    <style>
+        .must{
+            color: red;
+        }
+        .error{
+            color: #f00;
+        }
+        .ok{
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+<form method="post" action="">
+    <div class="int">
+        <label for="username">用户名：</label>
+        <input type="text" id="username" class="required"/>
+    </div>
+    <div class="int">
+        <label for="email">邮箱：</label>
+        <input type="text" id="email" class="required"/>
+    </div>
+    <div class="int">
+        <label for="personinfo">个人资料：</label>
+        <input type="text" id="personinfo"/>
+    </div>
+    <div class="int">
+        <input type="submit" value="提交" id="send"/>
+        <input type="reset" id="res"/>
+    </div>
+</form>
+</body>
+</html>

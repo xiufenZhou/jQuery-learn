@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-3.1.0.js"></script>
+    <script>
+        $(function(){
+            $('#select').click(function(){
+                $('[name=items]:checkbox').prop('checked',this.checked);
+            });
+            //多选框组与  全选/全不选 的关联：
+            //方法一：定义一个变量flag=true,遍历多选框组，出现未选中flag=false.
+//            $('[name=items]:checkbox').click(function(){
+//                var flag = true;
+//                $('[name=items]:checkbox').each(function(){
+//                    if(!this.checked){
+//                        flag = false;
+//                    }
+//                });
+//                $('#select').prop('checked',flag);
+//
+//            })
+            //方法二：判断多选框组的总数是否与选中的多选框数量相等
+            var n = $('[name=items]:checkbox').length
+            $('[name=items]:checkbox').click(function(){
+                var m =$('[name=items]:checkbox:checked').length;
+                $('#select').prop('checked',n==m);
+
+            })
+
+        })
+    </script>
+</head>
+<body>
+    <hr/>
+    <span>你爱好的运动是：</span>
+    <input type="checkbox" id="select"/>全选/全不选 <br/>
+    <input type="checkbox" name="items" value="足球"/>足球
+    <input type="checkbox" name="items" value="篮球"/>篮球
+    <input type="checkbox" name="items" value="羽毛球"/>羽毛球
+    <input type="checkbox" name="items" value="乒乓球"/>乒乓球 <br/>
+    <input type="button" value="提交"/>
+</body>
+</html>

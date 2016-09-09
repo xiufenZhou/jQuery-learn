@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>多行文本框和复选框</title>
+    <script src="jquery-3.1.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            var $comment = $('#comment');
+            $('.up').click(function(){
+                if(!$comment.is(':animated')){
+                    $('#comment').animate({scrollTop:'-=50'},400);
+                }
+
+            });
+            $('.down').click(function(){
+                if(!$comment.is(':animated')){
+                    $('#comment').animate({scrollTop:'+=50'},400);
+
+                }
+            });
+
+            $('#checkedAll').click(function(){
+                $('[name=items]:checkbox').prop('checked',true);
+            });
+            $('#checkedNo').click(function(){
+                $('[name=items]:checkbox').prop('checked',false);
+            });
+
+
+            $('#checkedRev').click(function(){
+                $('[name=items]:checkbox').each(function(){
+                    $(this).prop("checked",!$(this).prop("checked"));
+                    //this.checked = !this.checked;
+                })
+
+            });
+
+            $('#send').click(function(){
+                var str = '您选中的是：\n';
+                $('[name=items]:checkbox:checked').each(function(){
+                    str += $(this).val() + '\n';
+                });
+                alert(str);
+            });
+        });
+
+
+
+    </script>
+    <style>
+        .msg_caption span{
+            background-color: #ccc;
+        }
+        textarea{
+            overflow: scroll;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <hr/>
+    <div class="msg">
+        <div class="msg_caption">
+            <span class="down">down</span>
+            <span class="up">up</span>
+        </div>
+        <div>
+            <textarea id="comment" cols="20" rows="8">
+                多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，
+                多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，
+                多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，
+                多行文本框高度变化，多行文本框高度变化，
+                多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，多行文本框高度变化，
+                多行文本框高度变化，多行文本框高度变化，
+            </textarea>
+        </div>
+    </div>
+    <hr/>
+    <p>你爱好的运动是：</p>
+    <input type="checkbox" name="items" value="足球"/>足球
+    <input type="checkbox" name="items" value="篮球"/>篮球
+    <input type="checkbox" name="items" value="羽毛球"/>羽毛球
+    <input type="checkbox" name="items" value="乒乓球"/>乒乓球 <br/>
+    <input type="button" id="checkedAll" value="全选"/>
+    <input type="button" id="checkedNo" value="全不选"/>
+    <input type="button" id="checkedRev" value="反选"/>
+    <input type="button" id="send" value="提交"/>
+    <hr/>
+    <div style="width: 500px;line-height: 24px;">
+        <h2>attr()与prop()</h2>
+        jquery中使用attr() 来访问对象的属性，如$('img').attr('alt'),但是在某些
+        比如访问Input的disabled属性是，会有些问题。有些浏览器里，只要写了disabled就
+        可以，有些则要写:disabled='disabled'.  <br/><br/>
+        所以jquery提供了prop()来获取这些属性。使用prop()的时候，
+        返回值是标准属性：true/false.比如$('#checkbox').prop('disabled'),
+        不会返回'disabled'或者'',只会返回ture/false.<br/><br/>
+        哪些属性应该用attr()访问，哪些应该用prop()?<br/>
+        1.只添加属性名称该属性就能生效的属性应该使用prop();<br/>
+        2.只存在true/false的属性应该使用 prop().如：disabled checked
+
+    </div>
+
+</form>
+
+</body>
+</html>
